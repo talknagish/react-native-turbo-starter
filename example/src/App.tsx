@@ -27,7 +27,10 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 import {
-  getGreeting
+  getGreeting,
+  getTurboObject,
+  getTurboObjectGeneric,
+  getTurboPromise,
 } from 'react-native-turbo-starter';
 
 const Section: React.FC<{
@@ -66,6 +69,24 @@ const App = () => {
 
   React.useEffect(() => {
     setResult(getGreeting('Yotam'));
+
+    const obj = getTurboObject({
+      title: 'Hello, world!',
+    });
+    console.log('object', obj, obj?.response);
+
+    const gobj = getTurboObjectGeneric({
+      magicNumber: 7,
+    });
+    console.log('gobject', gobj);
+
+    getTurboPromise(42).then((res) => console.log('t1', res));
+
+    getTurboPromise(7).catch((error: Error) =>
+      console.log('t2', error.message)
+    );
+
+    getTurboPromise(1).then((res) => console.log('t3', res));
   }, []);
 
   const backgroundStyle = {
