@@ -19,3 +19,7 @@ export function getTurboObjectGeneric(options: Object) {
 export async function getTurboPromise(magicNumber: number) {
   return NativeTurboStarter.getTurboPromise(magicNumber);
 }
+
+export function getBatteryLevel() {
+  return NativeTurboStarter.getBatteryLevel();
+}

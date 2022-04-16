@@ -65,6 +65,11 @@
     resolve(@NO);
 }
 
+- (NSNumber *)getBatteryLevel {
+    UIDevice.currentDevice.batteryMonitoringEnabled = TRUE;
+    return @(UIDevice.currentDevice.batteryLevel * 100);
+}
+
 + (NSString *)moduleName {
     return @"TurboStarter";
 }

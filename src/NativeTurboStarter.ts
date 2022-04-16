@@ -19,6 +19,11 @@ export interface Spec extends TurboModule {
   getTurboObject(options: { title: string }): { response: string };
   getTurboObjectGeneric(options: Object): Object;
   getTurboPromise(magicNumber: number): Promise<boolean>;
+
+  //
+  // Native JSI calls
+  //
+  getBatteryLevel(): number;
 }
 
 // We know the module is going to be load so we export with the "!" so it doesn't add undefined to every function return value
