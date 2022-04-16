@@ -29,7 +29,8 @@
     "release": "release-it",
     "example": "yarn --cwd example",
     "pods": "cd example && RCT_NEW_ARCH_ENABLED=1 pod-install --quiet",
-    "bootstrap": "yarn example && yarn && yarn pods"
+    "bootstrap": "yarn example && yarn && yarn pods",
+    "rename": "node scripts/rename.js"
   },
   "keywords": [
     "react-native",
@@ -152,5 +153,8 @@
         "jsSrcsDir": "./src"
       }
     ]
+  },
+  "dependencies": {
+    "renamer": "^4.0.0"
   }
 }
