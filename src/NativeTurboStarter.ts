@@ -24,6 +24,11 @@ export interface Spec extends TurboModule {
   // Native JSI calls
   //
   getBatteryLevel(): number;
+
+  //
+  // C++ shared code
+  //
+  turboMultiply(num1: number, num2: number): number;
 }
 
 // We know the module is going to be load so we export with the "!" so it doesn't add undefined to every function return value

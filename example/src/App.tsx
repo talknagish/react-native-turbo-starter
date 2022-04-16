@@ -32,6 +32,7 @@ import {
   getTurboObject,
   getTurboObjectGeneric,
   getTurboPromise,
+  turboMultiply,
 } from 'react-native-turbo-starter';
 
 const Section: React.FC<{
@@ -90,6 +91,8 @@ const App = () => {
     getTurboPromise(1).then((res) => console.log('t3', res));
 
     console.log('batteryLevel', getBatteryLevel());
+
+    console.log(turboMultiply(3, 3));
   }, []);
 
   const backgroundStyle = {
