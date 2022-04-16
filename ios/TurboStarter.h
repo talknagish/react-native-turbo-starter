@@ -1,5 +1,5 @@
 #import <React/RCTBridgeModule.h>
 
-@interface TurboModulez : NSObject <RCTBridgeModule>
+@interface TurboStarter : NSObject <RCTBridgeModule>
 
 @end
