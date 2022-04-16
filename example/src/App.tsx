@@ -27,6 +27,7 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 import {
+  getBatteryLevel,
   getGreeting,
   getTurboObject,
   getTurboObjectGeneric,
@@ -87,6 +88,8 @@ const App = () => {
     );
 
     getTurboPromise(1).then((res) => console.log('t3', res));
+
+    console.log('batteryLevel', getBatteryLevel());
   }, []);
 
   const backgroundStyle = {

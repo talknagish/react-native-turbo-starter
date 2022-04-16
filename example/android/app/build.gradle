@@ -166,11 +166,6 @@ android {
         }
     }
 
-    packagingOptions {
-        // We use pick first startegy to resolve the libraries created from the module and from the app itself
-        pickFirst '**/*.so'
-    }
-
     if (isNewArchitectureEnabled()) {
         // We configure the NDK build only if you decide to opt-in for the New Architecture.
         externalNativeBuild {
@@ -213,6 +208,11 @@ android {
             }
         }
     }
+    
+    packagingOptions {
+        pickFirst '**/libhermes.so'
+        pickFirst '**/libjsc.so'
+    }
 
     splits {
         abi {
@@ -251,9 +251,8 @@ android {
             def abi = output.getFilter(OutputFile.ABI)
             if (abi != null) {  // null for the universal-debug, universal-release variants
                 output.versionCodeOverride =
-                        versionCodes.get(abi) * 1048576 + defaultConfig.versionCode
+                        defaultConfig.versionCode * 1000 + versionCodes.get(abi)
             }
-
         }
     }
 }
@@ -318,4 +317,5 @@ def isNewArchitectureEnabled() {
 react {
     reactRoot = rootProject.file("../node_modules/react-native/")
     codegenDir = rootProject.file("../node_modules/react-native-codegen/")
+    codegenJavaPackageName = "com.example.reactnativeturbostarter"
 }

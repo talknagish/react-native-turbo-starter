@@ -1,8 +1,12 @@
 package com.reactnativeturbostarter
 import com.facebook.react.bridge.*
+import android.content.Context.BATTERY_SERVICE
+import android.os.BatteryManager
 
 class TurboStarterModule(reactContext: ReactApplicationContext?) :
   NativeTurboStarterSpec(reactContext) {
+
+  val batteryManager = reactContext?.getSystemService(BATTERY_SERVICE) as BatteryManager
 
   override fun getGreeting(name: String): String {
     return String.format("Hello, %s!", name)
@@ -51,6 +55,10 @@ class TurboStarterModule(reactContext: ReactApplicationContext?) :
           promise.resolve(false)
         }
     }
+  }
+
+  override fun getBatteryLevel(): Double {
+    return batteryManager.getIntProperty(BatteryManager.BATTERY_PROPERTY_CAPACITY).toDouble()
   }
 
   override fun getName(): String {
