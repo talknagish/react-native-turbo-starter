@@ -1,19 +1,23 @@
-#import "TurboStarter.h"
 #import "react-native-turbo-starter.h"
+#import "TurboStarter.h"
+#import <TurboModulez/TurboModulez.h>
+
+@interface TurboStarter() <NativeTurboStarterSpec>
+@end
 
 @implementation TurboStarter
 
-RCT_EXPORT_MODULE()
-
-// Example method for C++
-// See the implementation of the example module in the `cpp` folder
-RCT_EXPORT_METHOD(multiply:(nonnull NSNumber*)a withB:(nonnull NSNumber*)b
-                  withResolver:(RCTPromiseResolveBlock)resolve
-                  withReject:(RCTPromiseRejectBlock)reject)
+- (std::shared_ptr<facebook::react::TurboModule>)getTurboModule:(const facebook::react::ObjCTurboModule::InitParams &)params
 {
-    NSNumber *result = @(example::multiply([a floatValue], [b floatValue]));
+  return std::make_shared<facebook::react::NativeTurboModulezSpecJSI>(params);
+}
 
-    resolve(result);
+- (NSString *)getGreeting:(NSString *)name {
+   return [NSString stringWithFormat: @"Hello, %@!", name];
+}
+
++ (NSString *)moduleName {
+    return @"TurboStarter";
 }
 
 @end
