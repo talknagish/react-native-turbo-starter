@@ -23,3 +23,7 @@ export async function getTurboPromise(magicNumber: number) {
 export function getBatteryLevel() {
   return NativeTurboStarter.getBatteryLevel();
 }
+
+export function turboMultiply(num1: number, num2: number) {
+  return NativeTurboStarter.turboMultiply(num1, num2);
+}

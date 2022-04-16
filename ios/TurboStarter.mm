@@ -70,6 +70,11 @@
     return @(UIDevice.currentDevice.batteryLevel * 100);
 }
 
+- (NSNumber *) turboMultiply:(double)num1 num2:(double)num2{
+    double res = turbostarter::multiply(num1, num2);
+    return [NSNumber numberWithDouble:res];
+}
+
 + (NSString *)moduleName {
     return @"TurboStarter";
 }

@@ -61,11 +61,21 @@ class TurboStarterModule(reactContext: ReactApplicationContext?) :
     return batteryManager.getIntProperty(BatteryManager.BATTERY_PROPERTY_CAPACITY).toDouble()
   }
 
+  override fun turboMultiply(num1: Double, num2: Double): Double {
+    return nativeMultiply(num1, num2)
+  }
+
   override fun getName(): String {
     return NAME
   }
 
+  private external fun nativeMultiply(num1: Double, num2: Double): Double
+
   companion object {
     const val NAME = "TurboStarter"
+
+    init {
+      System.loadLibrary("reactnativeturbostarter-jni")
+    }
   }
 }
