@@ -1,6 +1,7 @@
 #import "react-native-turbo-starter.h"
 #import "TurboStarter.h"
 #import <TurboStarter/TurboStarter.h>
+#import <React/RCTLog.h>
 
 @interface TurboStarter() <NativeTurboStarterSpec>
 @end
@@ -23,7 +24,7 @@
 
 - (NSDictionary *)getTurboObject:(JS::NativeTurboStarter::SpecGetTurboObjectOptions &)options {
     
-    NSLog(@"getTurboObject options (title): %@", options.title());
+    RCTLogInfo(@"getTurboObject options (title): %@", options.title());
     
     id keys[] = { @"helloString", @"magicNumber", @"response" };
     id objects[] = { @"Hello, World!", @42, @"res" };
