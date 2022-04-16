@@ -104,8 +104,6 @@ Java_com_reactnativeturbostarter_TurboStarterModule_nativeMultiply(JNIEnv *env, 
 5. Call native code (https://github.com/talknagish/react-native-turbo-starter/pull/4)
 6. Add the shared C++ library (https://github.com/talknagish/react-native-turbo-starter/pull/5)
 
-## Clone and create your own library
-
 ## Known Issues
 1. Full refresh (cmd + R) on Android crashes the application because of an issue in shadowTreeRegistry.cpp (didn't find a respective issue in their repo)
 2. When building for Android codegen doesn't always generates the new spec, so sometimes you have to delete the build folders until we find a better solution 
@@ -124,6 +122,17 @@ const spyFunction = (msg) => {
 };
 ```
 3. Call `MessageQueue.spy(spyFunction);`
+
+## Clone and create your own library
+1. clone `react-native-turbo-starter`
+2. cd `react-native-turbo-starter`
+3. `rm -rf .git`
+4. rename all files containing `starter` word (script in the future)
+5. `git init`
+6. `git remote add origin <new repo url>`
+7. `git add .`
+8. `git commit -m "Initial Commit"`
+9. `git push -u origin main`
 
 ## License
 
