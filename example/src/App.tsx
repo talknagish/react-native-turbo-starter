@@ -19,16 +19,11 @@ import {
   View,
 } from 'react-native';
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+import { Colors } from 'react-native/Libraries/NewAppScreen';
 import {
   getBatteryLevel,
   getGreeting,
+  getTurboArray,
   getTurboObject,
   getTurboObjectGeneric,
   getTurboPromise,
@@ -67,32 +62,16 @@ const Section: React.FC<{
 
 const App = () => {
   const isDarkMode = useColorScheme() === 'dark';
-  const [result, setResult] = React.useState<string>('');
+  const [promise1, setPromise1] = React.useState<boolean>(false);
+  const [promise2, setPromise2] = React.useState<boolean>(false);
+  const [promise3, setPromise3] = React.useState<string>('');
 
   React.useEffect(() => {
-    setResult(getGreeting('Yotam'));
-
-    const obj = getTurboObject({
-      title: 'Hello, world!',
+    getTurboPromise(42).then((res) => setPromise1(res));
+    getTurboPromise(1).then((res) => setPromise2(res));
+    getTurboPromise(7).catch((error: Error) => {
+      setPromise3(error.message);
     });
-    console.log('object', obj, obj?.response);
-
-    const gobj = getTurboObjectGeneric({
-      magicNumber: 7,
-    });
-    console.log('gobject', gobj);
-
-    getTurboPromise(42).then((res) => console.log('t1', res));
-
-    getTurboPromise(7).catch((error: Error) =>
-      console.log('t2', error.message)
-    );
-
-    getTurboPromise(1).then((res) => console.log('t3', res));
-
-    console.log('batteryLevel', getBatteryLevel());
-
-    console.log(turboMultiply(3, 3));
   }, []);
 
   const backgroundStyle = {
@@ -106,26 +85,38 @@ const App = () => {
         contentInsetAdjustmentBehavior="automatic"
         style={backgroundStyle}
       >
-        <Header />
+        <Text style={[styles.sectionContainer, styles.sectionTitle]}>
+          React Native Turbo Starter
+        </Text>
         <View
           style={{
             backgroundColor: isDarkMode ? Colors.black : Colors.white,
           }}
         >
-          <Section title={result}>
-            Edit <Text style={styles.highlight}>App.tsx</Text> to change this
-            screen and then come back to see your edits.
+          <Section title="getGreeting">{getGreeting('Yotam')}</Section>
+          <Section title="getTurboArray">
+            {getTurboArray(['Hello', 'World']).join(', ')}
           </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
+          <Section title="getTurboObject">
+            {JSON.stringify(
+              getTurboObject({
+                title: 'Hello, world!',
+              })
+            )}
           </Section>
-          <Section title="Debug">
-            <DebugInstructions />
+          <Section title="getTurboObjectGeneric">
+            {JSON.stringify(
+              getTurboObjectGeneric({
+                magicNumber: 7,
+              })
+            )}
           </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
+          <Section title="getTurboPromise (resolve)">{`${promise1}`}</Section>
+          <Section title="getTurboPromise (resolve) 2">{`${promise2}`}</Section>
+          <Section title="getTurboPromise (reject)">{promise3}</Section>
+          <Section title="getBatteryLevel">{getBatteryLevel()}</Section>
+
+          <Section title="multiply (c++)">{turboMultiply(3, 3)}</Section>
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -134,7 +125,7 @@ const App = () => {
 
 const styles = StyleSheet.create({
   sectionContainer: {
-    marginTop: 32,
+    marginTop: 20,
     paddingHorizontal: 24,
   },
   sectionTitle: {
@@ -142,7 +133,7 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
   sectionDescription: {
-    marginTop: 8,
+    marginTop: 4,
     fontSize: 18,
     fontWeight: '400',
   },
