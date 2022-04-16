@@ -43,7 +43,7 @@ android {
     externalNativeBuild {
         cmake {
             path "CMakeLists.txt"
-	    # pin cmake version to support M1 machines
+	        // pin cmake version to support M1 machines
             version '3.22.1'
         }
     }
@@ -90,8 +90,8 @@ dependencies {
 
 if (isNewArchitectureEnabled()) {
     react {
-        libraryName = "reactnativeturbomodulez"
-        codegenJavaPackageName = "com.reactnativeturbomodulez"
+        libraryName = "reactnativeturbostarter"
+        codegenJavaPackageName = "com.reactnativeturbostarter"
         jsRootDir = file("../src/")
         reactRoot = rootProject.file("../node_modules/react-native/")
         codegenDir = rootProject.file("../node_modules/react-native-codegen/")
