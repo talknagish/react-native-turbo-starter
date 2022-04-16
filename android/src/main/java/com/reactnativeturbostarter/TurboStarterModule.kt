@@ -6,7 +6,9 @@ import android.os.BatteryManager
 class TurboStarterModule(reactContext: ReactApplicationContext?) :
   NativeTurboStarterSpec(reactContext) {
 
-  val batteryManager = reactContext?.getSystemService(BATTERY_SERVICE) as BatteryManager
+  private val batteryManager: BatteryManager? by lazy {
+      reactContext.get()?.getSystemService(BATTERY_SERVICE) as BatteryManager
+  }
 
   override fun getGreeting(name: String): String {
     return String.format("Hello, %s!", name)
