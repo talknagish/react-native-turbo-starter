@@ -1,4 +1,5 @@
-![turbomodule-04-03](https://user-images.githubusercontent.com/176762/163688849-bbd37913-f4ec-42a8-aebe-fab910def053.png)
+![turbomodule-04-03](https://user-images.githubusercontent.com/176762/163688869-6c835d0f-c54f-45b4-917c-aae49cf2775e.png)
+
 
 React 0.68+ Turbo Module starter using codegen with typescript for Objective-C and Java/Kotlin with C++ shared library. 🚀🚀🚀
 
