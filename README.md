@@ -15,11 +15,11 @@ React 0.68+ Turbo Module starter using codegen with typescript for Objective-C a
 
 ## Considerations and Notes
 
-1. This module doesn't offer backward compatiablility. You will only be able to use it with the new architecture enabled.
-2. The shared C++ library does require JNI bindings on Android and converting types on iOS from c++ to Objective-C
-3. We didn't find an easy way to incorporate swift instead of Objective-c (it's not as easy to call C++ code from Swift)
-4. We pin CMake version to support M1 machines. We also used CMake to compile the shared C++ library because it's the recommended tech (in oppose to ndk-build)
-5. In the .podspec file, the version of folly has to be exactly the same as the react-native's version
+1. This module doesn't offer backward compatibility. You will only be able to use it with the new architecture enabled.
+2. The shared C++ library requires JNI bindings on Android, and converting types on iOS from C++ to Objective-C.
+3. We didn't find an easy way to incorporate Swift instead of Objective-c (it's not as easy to call C++ code from Swift).
+4. We pin CMake version to support M1 machines. We also used CMake to compile the shared C++ library because it's the recommended tech (in oppose to ndk-build).
+5. In the `.podspec` file, the version of folly has to be exactly the same as the react-native's version
 
 ## Running the example project
 
@@ -54,7 +54,7 @@ iOS
 
 Android
 1. run `./gradlew generateCodegenArtifactsFromSchema` in example/android
-2. You can open android studio and access `android/src/main/java/com/reactnativeturbostarter/TurboStarterModule.kt` and let android studio complete the missing new function for you
+2. You can open Android Studio and access `android/src/main/java/com/reactnativeturbostarter/TurboStarterModule.kt` and let android studio complete the missing new function for you
 3. Alternatively, you can open `TurboStarterModule.kt` and implement it by yourself
 4. We're done! You can find the generated code in this path: `android/build/generated/source/codegen`
 
