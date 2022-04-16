@@ -20,9 +20,7 @@ React 0.68+ Turbo Module starter using codegen with typescript for Objective-C a
 4. We pin CMake version to support M1 machines. We also used CMake to compile the shared C++ library because it's the recommended tech (in oppose to ndk-build)
 5. In the .podspec file, the version of folly has to be exactly the same as the react-native's version
 
-## Clone and create your own library
-
-## Running the example
+## Running the example project
 
 ```sh
 yarn bootstrap
@@ -40,13 +38,62 @@ yarn android
 
 ## Adding new functionality
 
-Adding another function is very simple using codegen. 
+### Native functionality
 
-### Native function
+1. Open `src/NativeTurboStarter.ts`
+2. Add your function definition inside the Spec
+3. Open `src/index.ts` and export your new function via a wrapper
+4. Call your new function from `App.tsx` to test that it works
 
-### C++ function
+iOS
+1. Run `RCT_NEW_ARCH_ENABLED=1 pod install` in `example/ios` folder
+2. You can run `xed ios` to open to workspace, and on the left side bar navigate to `Pods -> Development Pods -> react-native-turbo-starter -> ios -> TurboStarter.mm` and next to the `@implementation` XCode will offer to complete the missing protocol for you
+3. Alternatively, you can open `TurboStarter.mm` and implement the new function by yourself.
+4. We're done! You can find the generated code in this path: `example/ios/build/generated/ios/TurboStarter`
 
-### Codegen
+Android
+1. run `./gradlew generateCodegenArtifactsFromSchema` in example/android
+2. You can open android studio and access `android/src/main/java/com/reactnativeturbostarter/TurboStarterModule.kt` and let android studio complete the missing new function for you
+3. Alternatively, you can open `TurboStarterModule.kt` and implement it by yourself
+4. We're done! You can find the generated code in this path: `android/build/generated/source/codegen`
+
+Now you can re-run the example project and watch as your code runs with JSI!
+
+### C++ functionality
+
+Follow the steps above, but consider the following:
+1. Declare your C++ function here: `cpp/react-native-turbo-starter.h`
+2. Implement your C++ function here: `cpp/react-native-turbo-starter.cpp`
+
+iOS
+1. In TurboStarter.mm, implememnt the function from the Spec, and you will be able to use it as a wrapper for calling the C++ code. 
+2. You will need to convert the types when returning the function like so
+```objc
+- (NSNumber *) turboMultiply:(double)num1 num2:(double)num2{
+    double res = turbostarter::multiply(num1, num2);
+    return [NSNumber numberWithDouble:res];
+}
+```
+
+Android
+1. In `TurboStarterModule.kt` you will need to declare your native JNI function
+```kotlin
+private external fun nativeMultiply(num1: Double, num2: Double): Double
+```
+2. Then you will be able to create a wrapper that calls the C++ code
+```kotlin
+override fun turboMultiply(num1: Double, num2: Double): Double {
+  return nativeMultiply(num1, num2)
+}
+```
+3. In `android/src/main/jni/cpp-adapter.cpp` you will need to add the JNI function that wraps around the C++ function
+```cpp
+extern "C" JNIEXPORT jdouble JNICALL
+Java_com_reactnativeturbostarter_TurboStarterModule_nativeMultiply(JNIEnv *env, jclass type, jdouble num1, jdouble num2)
+{
+    return turbostarter::multiply(num1, num2);
+}
+```
 
 ## Steps taken to create this repository
 
@@ -57,11 +104,26 @@ Adding another function is very simple using codegen.
 5. Call native code (https://github.com/talknagish/react-native-turbo-starter/pull/4)
 6. Add the shared C++ library (https://github.com/talknagish/react-native-turbo-starter/pull/5)
 
+## Clone and create your own library
+
 ## Known Issues
 1. Full refresh (cmd + R) on Android crashes the application because of an issue in shadowTreeRegistry.cpp (didn't find a respective issue in their repo)
 2. When building for Android codegen doesn't always generates the new spec, so sometimes you have to delete the build folders until we find a better solution 
 
 ## BridgeSpy
+It's all nice but how do we know this is actually not using the bridge anymore?
+To see that we enabled JSI correctly, you can log out everything that is passing through the bridge
+and see that it's now clean (besides some data from metro-bundler)
+
+in `App.tsx`
+1. Add `import MessageQueue from 'react-native/Libraries/BatchedBridge/MessageQueue.js';` 
+2. 
+```js
+const spyFunction = (msg) => {
+  console.log(msg);
+};
+```
+3. Call `MessageQueue.spy(spyFunction);`
 
 ## License
 
