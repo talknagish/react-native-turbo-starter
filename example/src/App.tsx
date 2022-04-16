@@ -18,17 +18,9 @@ import {
   useColorScheme,
   View,
 } from 'react-native';
+import NativeTurboStarter from 'react-native-turbo-starter';
 
 import { Colors } from 'react-native/Libraries/NewAppScreen';
-import {
-  getBatteryLevel,
-  getGreeting,
-  getTurboArray,
-  getTurboObject,
-  getTurboObjectGeneric,
-  getTurboPromise,
-  turboMultiply,
-} from 'react-native-turbo-starter';
 
 const Section: React.FC<{
   title: string;
@@ -67,9 +59,10 @@ const App = () => {
   const [promise3, setPromise3] = React.useState<string>('');
 
   React.useEffect(() => {
-    getTurboPromise(42).then((res) => setPromise1(res));
-    getTurboPromise(1).then((res) => setPromise2(res));
-    getTurboPromise(7).catch((error: Error) => {
+    NativeTurboStarter.getGreeting('Yotam');
+    NativeTurboStarter.getTurboPromise(42).then((res) => setPromise1(res));
+    NativeTurboStarter.getTurboPromise(1).then((res) => setPromise2(res));
+    NativeTurboStarter.getTurboPromise(7).catch((error: Error) => {
       setPromise3(error.message);
     });
   }, []);
@@ -93,20 +86,22 @@ const App = () => {
             backgroundColor: isDarkMode ? Colors.black : Colors.white,
           }}
         >
-          <Section title="getGreeting">{getGreeting('Yotam')}</Section>
+          <Section title="getGreeting">
+            {NativeTurboStarter.getGreeting('Yotam')}
+          </Section>
           <Section title="getTurboArray">
-            {getTurboArray(['Hello', 'World']).join(', ')}
+            {NativeTurboStarter.getTurboArray(['Hello', 'World']).join(', ')}
           </Section>
           <Section title="getTurboObject">
             {JSON.stringify(
-              getTurboObject({
+              NativeTurboStarter.getTurboObject({
                 title: 'Hello, world!',
               })
             )}
           </Section>
           <Section title="getTurboObjectGeneric">
             {JSON.stringify(
-              getTurboObjectGeneric({
+              NativeTurboStarter.getTurboObjectGeneric({
                 magicNumber: 7,
               })
             )}
@@ -114,9 +109,13 @@ const App = () => {
           <Section title="getTurboPromise (resolve)">{`${promise1}`}</Section>
           <Section title="getTurboPromise (resolve) 2">{`${promise2}`}</Section>
           <Section title="getTurboPromise (reject)">{promise3}</Section>
-          <Section title="getBatteryLevel">{getBatteryLevel()}</Section>
+          <Section title="getBatteryLevel">
+            {NativeTurboStarter.getBatteryLevel()}
+          </Section>
 
-          <Section title="multiply (c++)">{turboMultiply(3, 3)}</Section>
+          <Section title="multiply (c++)">
+            {NativeTurboStarter.turboMultiply(3, 3)}
+          </Section>
         </View>
       </ScrollView>
     </SafeAreaView>
