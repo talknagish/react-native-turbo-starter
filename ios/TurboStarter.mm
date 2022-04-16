@@ -57,7 +57,7 @@
         resolve(@YES);
         return;
     } else if (magicNumber == 7) {
-        NSError *error = [NSError errorWithDomain:@"com.yourcompany.turbostarter" code:3456 userInfo:@{NSLocalizedDescriptionKey:@"Invalid user name."}];
+        NSError *error = [NSError errorWithDomain:@"com.example.reactnativeturbostarter" code:3456 userInfo:@{NSLocalizedDescriptionKey:@"Invalid user name."}];
         reject(@"1", @"You stepped on a mine", error);
         return;
     }
