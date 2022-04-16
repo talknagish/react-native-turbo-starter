@@ -3,41 +3,48 @@ buildscript {
         repositories {
             google()
             mavenCentral()
-            jcenter()
         }
 
         dependencies {
-            classpath 'com.android.tools.build:gradle:3.5.3'
+            classpath 'com.android.tools.build:gradle:7.0.4'
+            classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.10"
         }
     }
 }
 
-apply plugin: 'com.android.library'
+def isNewArchitectureEnabled() {
+    return project.hasProperty("newArchEnabled") && project.newArchEnabled == "true"
+}
 
 def safeExtGet(prop, fallback) {
     rootProject.ext.has(prop) ? rootProject.ext.get(prop) : fallback
 }
 
+apply plugin: "com.facebook.react"
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
 android {
-    compileSdkVersion safeExtGet('TurboStarter_compileSdkVersion', 29)
+    compileSdkVersion safeExtGet('TurboStarter_compileSdkVersion', 31)
     defaultConfig {
-        minSdkVersion safeExtGet('TurboStarter_minSdkVersion', 16)
-        targetSdkVersion safeExtGet('TurboStarter_targetSdkVersion', 29)
+        minSdkVersion safeExtGet('TurboStarter_minSdkVersion', 21)
+        targetSdkVersion safeExtGet('TurboStarter_targetSdkVersion', 31)
         versionCode 1
         versionName "1.0"
 
         externalNativeBuild {
             cmake {
-                cppFlags "-O2 -frtti -fexceptions -Wall -fstack-protector-all"
-                abiFilters 'x86', 'x86_64', 'armeabi-v7a', 'arm64-v8a'
+                cFlags "-Wall", "-Werror", "-fexceptions", "-frtti", "-DWITH_INSPECTOR=1"
+                arguments "-DCMAKE_VERBOSE_MAKEFILE=1"
+                cppFlags "-std=c++17"
             }
         }
-
     }
 
     externalNativeBuild {
         cmake {
             path "CMakeLists.txt"
+	    # pin cmake version to support M1 machines
+            version '3.22.1'
         }
     }
 
@@ -46,12 +53,24 @@ android {
             minifyEnabled false
         }
     }
+
     lintOptions {
         disable 'GradleCompatible'
     }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    sourceSets.main {
+        java {
+            if (!isNewArchitectureEnabled()) {
+                srcDirs += [
+                    "build/generated/source/codegen/java"
+                ]
+            }
+        }
     }
 }
 
@@ -63,10 +82,18 @@ repositories {
     }
     google()
     mavenCentral()
-    jcenter()
 }
 
 dependencies {
-    //noinspection GradleDynamicVersion
-    implementation "com.facebook.react:react-native:+"  // From node_modules
+    implementation project(':ReactAndroid')
+}
+
+if (isNewArchitectureEnabled()) {
+    react {
+        libraryName = "reactnativeturbomodulez"
+        codegenJavaPackageName = "com.reactnativeturbomodulez"
+        jsRootDir = file("../src/")
+        reactRoot = rootProject.file("../node_modules/react-native/")
+        codegenDir = rootProject.file("../node_modules/react-native-codegen/")
+    }
 }

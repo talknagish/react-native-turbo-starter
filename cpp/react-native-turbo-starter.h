@@ -1,8 +1,9 @@
-#ifndef EXAMPLE_H
-#define EXAMPLE_H
+#ifndef TURBOSTARTER_H
+#define TURBOSTARTER_H
 
-namespace example {
-  int multiply(float a, float b);
+namespace turbostarter
+{
+
 }
 
-#endif /* EXAMPLE_H */
+#endif /* TURBOSTARTER_H */

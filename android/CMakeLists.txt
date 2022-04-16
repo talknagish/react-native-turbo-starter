@@ -1,15 +1,32 @@
-cmake_minimum_required(VERSION 3.4.1)
+cmake_minimum_required(VERSION 3.9)
 
-set (CMAKE_VERBOSE_MAKEFILE ON)
-set (CMAKE_CXX_STANDARD 11)
+project(reactnativeturbostarter-jni LANGUAGES CXX)
 
-add_library(cpp
-            SHARED
-            ../cpp/react-native-turbo-starter.cpp
-            cpp-adapter.cpp
+set(CMAKE_VERBOSE_MAKEFILE ON)
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+file(GLOB SOURCES "../cpp/*.cpp")
+file(GLOB JNISOURCES "src/main/jni/*.cpp")
+
+add_compile_options(-Wall -Werror -fexceptions -frtti)
+add_library(${PROJECT_NAME}
+    SHARED
+    ${SOURCES}
+    ${JNISOURCES}
 )
 
-# Specifies a path to native header files.
 include_directories(
-            ../cpp
+    ../cpp
+)
+
+find_library(
+    log-lib
+    log
+)
+
+target_link_libraries(
+    ${PROJECT_NAME}
+    android
+    ${log-lib}
 )
