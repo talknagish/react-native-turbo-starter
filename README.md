@@ -17,7 +17,7 @@ React 0.68+ Turbo Module starter using codegen with typescript for Objective-C a
 
 1. This module doesn't offer backward compatibility. You will only be able to use it with the new architecture enabled.
 2. The shared C++ library requires JNI bindings on Android, and converting types on iOS from C++ to Objective-C.
-3. We didn't find an easy way to incorporate Swift instead of Objective-c (it's not as easy to call C++ code from Swift).
+3. We didn't find an easy way to incorporate Swift instead of Objective-C (it's not as easy to call C++ code from Swift).
 4. We pin CMake version to support M1 machines. We also used CMake to compile the shared C++ library because it's the recommended tech (in oppose to ndk-build).
 5. In the `.podspec` file, the version of folly has to be exactly the same as the react-native's version
 
