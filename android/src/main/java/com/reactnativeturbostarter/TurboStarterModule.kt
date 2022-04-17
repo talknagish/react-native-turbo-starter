@@ -6,7 +6,11 @@ import android.os.BatteryManager
 class TurboStarterModule(reactContext: ReactApplicationContext?) :
   NativeTurboStarterSpec(reactContext) {
 
-  val batteryManager = reactContext?.getSystemService(BATTERY_SERVICE) as BatteryManager
+  private val batteryManager: BatteryManager? by lazy {
+    reactContext?.getSystemService(
+      BATTERY_SERVICE
+    ) as BatteryManager
+  }
 
   override fun getGreeting(name: String): String {
     return String.format("Hello, %s!", name)
@@ -58,7 +62,7 @@ class TurboStarterModule(reactContext: ReactApplicationContext?) :
   }
 
   override fun getBatteryLevel(): Double {
-    return batteryManager.getIntProperty(BatteryManager.BATTERY_PROPERTY_CAPACITY).toDouble()
+    return batteryManager?.getIntProperty(BatteryManager.BATTERY_PROPERTY_CAPACITY)?.toDouble() ?: .0
   }
 
   override fun turboMultiply(num1: Double, num2: Double): Double {
