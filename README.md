@@ -166,7 +166,7 @@ const spyFunction = (msg) => {
 **Nagish makes communication more accessible to all.** 
 
 We believe that people who are Deaf or Hard-of-Hearing deserve to communicate on their own, without relying on anyone else.
-t
+
 We're always looking for talented humans who are interested in building the future of accessible communication with us.
 
 If you like this project and want to work on similar tech click below
