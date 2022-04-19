@@ -161,6 +161,18 @@ const spyFunction = (msg) => {
 8. `git commit -m "Initial Commit"`
 9. `git push -u origin main`
 
+## We're Hiring
+
+**Nagish makes communication more accessible to all.** 
+
+We believe that people who are Deaf or Hard-of-Hearing deserve to communicate on their own, without relying on anyone else.
+
+We're always looking for talented humans who are interested in building the future of accessible communication with us.
+
+If you like this project and want to work on similar tech click below
+
+https://talknagish.com/careers
+
 ## License
 
 MIT
