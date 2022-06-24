@@ -44,6 +44,22 @@ yarn ios
 ```sh
 yarn android
 ```
+## Renaming the project
+This project contains a script that allows to rename the project with another name than `turbo-starter`.
+
+### Exemple
+
+```sh
+yarn # Install all dependencies
+yarn rename -m turbo-tester -c # Rename the project
+yarn # Install all dependencies
+```
+
+### Options
+| Name                          | Short name | Required      |  Description                               |
+|:------------------------------|:-----------|:--------------|:-------------------------------------------|
+| `--module-name <name>`        | `-m <name>`| `yes`         | Your new module name                       |
+| `--clean`                     | `-c`       | `no`          |Remove script dependencies in package.json |
 
 ## Adding new functionality
 
