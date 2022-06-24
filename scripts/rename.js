@@ -61,17 +61,12 @@ program
     const cleanUpper = cleanModuleName.toUpperCase();
     const space = toTitleCase(moduleName.replaceAll('-', ' '));
     const title = space.replaceAll(' ', '');
-    console.log('Module name:', moduleName);
-    console.log('Clean:', cleanModuleName);
-    console.log('Clean Upper:', cleanUpper);
-    console.log('Space:', space);
-    console.log('Title:', title);
     console.log('Rename files and folders');
     await renameFiles(moduleName, cleanModuleName, title);
-    console.log('find and rename files contents');
+    console.log('Rename files contents');
     await replace(moduleName, cleanModuleName, cleanUpper, space, title);
     if (clean) {
-      console.log('Removing script and dependencies');
+      console.log(`Removing 'renamer' and 'commander' dependencies`);
       await exec(`yarn remove renamer`);
       await exec(`yarn remove commander`);
     }
